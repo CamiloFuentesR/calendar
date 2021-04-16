@@ -84,3 +84,16 @@ html, body{
     position: fixed;
     right: 25px;
 }
+
+@media(max-width: 500px){
+    .modal {
+        background: white;
+        border-radius: 5px;
+        color: rgb(51, 51, 51);
+        display: inline;
+        max-height: 600px;
+        max-width: 400px;
+        outline: none;
+        padding: 10px;
+    }
+}

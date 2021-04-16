@@ -20,7 +20,7 @@ const customStyles = {
         top: '50%',
         left: '50%',
         right: 'auto',
-        bottom: '40%',
+        bottom: '10%',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)'
     }
@@ -107,10 +107,23 @@ export const CalendarModal = () => {
             isOpen={modalOpen}
             // onAfterOpen={sa}
             onRequestClose={closeModal}
-            style={customStyles}
+            // style={customStyles}
             closeTimeoutMS={200}
             className='modal '
             overlayClassName='modal-fondo'
+            style={{
+                overlay:{
+                    position: 'fixed',
+                    top:0,
+                    bottom:0
+                },
+                content:{
+                    top:10,
+                    bottom: 30,
+                    left:10,
+                    right:10
+                }
+            }}
         >
             <h1> Nuevo evento </h1>
             <hr />
@@ -196,7 +209,7 @@ export const CalendarModal = () => {
                         type="text"
                         className="form-control"
                         placeholder="Notas"
-                        rows="5"
+                        rows="3"
                         name="notes"
                         value={notes}
                         onChange={handleInputChange}
