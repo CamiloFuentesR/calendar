@@ -207,14 +207,14 @@ export const CalendarModal = () => {
                 <div className="row justify-content-between ml-1 mr-1">
                 <button
                     type="submit"
-                    className="btn btn-outline-primary col-5 col-sm-4 p-2"
+                    className="btn btn-outline-primary col col-sm-5 p-2"
                 >
                     <i className="far fa-save mr-2"></i>
                     <span> Guardar</span>
                 </button>
                 <button
                     type="submit"
-                    className="btn btn-outline-danger  col-5 col-sm-4"
+                    className="btn btn-outline-danger col col-sm-5"
                 >
                     <i className="far fa-trash-alt mr-2"></i>
                     <span> Eliminar</span>
