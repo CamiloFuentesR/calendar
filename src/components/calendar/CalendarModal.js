@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Modal from 'react-modal';
 import {
     DateTimePicker,
@@ -10,13 +10,14 @@ import 'moment/locale/es';
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/uiActions';
-
+import { cleanActiveNote, eventAddNew } from '../../actions/eventActions';
 
 moment.locale("es");
-  
+
 //recomendado colocarlo en un componente aparte e importarlo
- const customStyles = {
+const customStyles = {
     content: {
+        position: 'fixed',
         top: '50%',
         left: '49%',
         right: 'auto',
@@ -24,45 +25,57 @@ moment.locale("es");
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)'
     }
-}; 
+};
 Modal.setAppElement('#root');
 
 const now = moment().minutes(0).seconds(0).add(1, 'hours'); //
 const endDate = now.clone().add(1, 'hours') //
 
+const initEvent = {
+    title: '',
+    start: now.toDate(),
+    end: endDate.toDate(),
+    notes: '',
+}
+
 export const CalendarModal = () => {
 
-    const {modalOpen} = useSelector(state => state.root.ui)
-    const dispatch = useDispatch();
-    console.log(modalOpen);
     const [locale] = useState("es");
+
+    const { modalOpen } = useSelector(state => state.root.ui)
+    const {activeEvent} = useSelector(state => state.root.calendar)
+    const dispatch = useDispatch();
+
     const [dateStart, setDateStart] = useState(now.toDate());
     const [dateEnd, setDateEnd] = useState(endDate.toDate());
+
     const [validTitle, setValidTitle] = useState(true)
+    const [formValues, setFormValues] = useState(initEvent);
 
-    const [formValues, setFormValues] = useState({
-        title:'Evento',
-        start:now.toDate(),
-        end:endDate.toDate(),
-        notes: '',
-    });
+    const { notes, title, start, end } = formValues;
 
-    const {notes,title,start,end} = formValues;
+    useEffect(() => {
+        if(activeEvent){
+            setFormValues(activeEvent)
+        }
+        console.log(activeEvent)
+    }, [activeEvent])
 
-    const handleInputChange = ({target}) => {
+    const handleInputChange = ({ target }) => {
 
         setFormValues({
             ...formValues,
-            [target.name] : target.value
+            [target.name]: target.value
         });
     }
 
     const closeModal = () => {
-        if(modalOpen){ //para que no se repita dos veces el dispatch
+        if (modalOpen) { //para que no se repita dos veces el dispatch
             dispatch(uiCloseModal());
+            dispatch(cleanActiveNote());
         }
-        
-        
+        setFormValues(initEvent);
+
     }
 
     const handleStartDateChange = (e) => {
@@ -79,25 +92,28 @@ export const CalendarModal = () => {
             end: e.toDate()
         });
     }
-
     const handleSubmitForm = (e) => {
         e.preventDefault();
 
         const momentStart = moment(start)
         const momentEnd = moment(end)
 
-      
-        if(momentStart.isSameOrAfter(momentEnd)){
-            Swal.fire('Error','La Fecha final debe ser mayor a la fecha de inicio','error')
+        if (momentStart.isSameOrAfter(momentEnd)) {
+            Swal.fire('Error', 'La Fecha final debe ser mayor a la fecha de inicio', 'error')
             return;
         }
-
-        if(title.trim().length < 2){
+        if (title.trim().length < 2) {
             return setValidTitle(false)
         }
-
         //toDo Realizar grabacion en bdd
-
+        dispatch(eventAddNew({
+            ...formValues,
+            id: new Date().getTime(),
+            user: {
+                _id: 123,
+                name: 'Cam'
+            }
+        }));
         setValidTitle(true);
         closeModal();
     }
@@ -111,15 +127,13 @@ export const CalendarModal = () => {
             closeTimeoutMS={200}
             className='modal '
             overlayClassName='modal-fondo'
-            
         >
             <h1 className="text-center"> Nuevo evento </h1>
             <hr />
-            <form 
+            <form
                 className="container"
                 onSubmit={handleSubmitForm}
             >
-
                 <div className="form-group">
                     <label>Fecha y hora inicio</label>
                     {/* <DateTimePicker
@@ -130,8 +144,8 @@ export const CalendarModal = () => {
                         amPmAriaLabel="Select AM/PM"
                         minuteAriaLabel="Minute"
                     /> */}
-                     <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}> 
-                     {/*    <DatePicker 
+                    <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}>
+                        {/*    <DatePicker 
                             value={selectedDate} 
                             onChange={handleDateChange} 
                             className="form-control"
@@ -141,18 +155,17 @@ export const CalendarModal = () => {
                             onChange={handleDateChange} 
                             className="form-control"
                         /> */}
-                        <DateTimePicker 
+                        <DateTimePicker
                             autoOk
                             _locale={"es"}
-                            value={dateStart} 
-                            onChange={handleStartDateChange} 
+                            value={dateStart}
+                            onChange={handleStartDateChange}
                             className="form-control in"
                             format="y-MM-DD - ddd - h:mm:ss a"
-                            
-                        />
-                     </MuiPickersUtilsProvider> 
-                </div>
 
+                        />
+                    </MuiPickersUtilsProvider>
+                </div>
                 <div className="form-group">
                     <label>Fecha y hora fin</label>
                     {/* <DateTimePicker
@@ -163,20 +176,19 @@ export const CalendarModal = () => {
                         format="y-MM-dd h:mm:ss a"
                         amPmAriaLabel="Select AM/PM"
                     /> */}
-                     <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}> 
-                   {/*      <DatePicker value={selectedDate} onChange={handleDateChange} />
+                    <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}>
+                        {/*      <DatePicker value={selectedDate} onChange={handleDateChange} />
                         <TimePicker value={selectedDate} onChange={handleDateChange} /> */}
-                        <DateTimePicker 
+                        <DateTimePicker
                             autoOk
-                            value={dateEnd} 
-                            onChange={handleEndDateChange} 
+                            value={dateEnd}
+                            onChange={handleEndDateChange}
                             className="form-control"
                             minDate={dateStart}
                             format="y-MM-DD - ddd - h:mm:ss a"
                         />
-                    </MuiPickersUtilsProvider> 
+                    </MuiPickersUtilsProvider>
                 </div>
-
                 <hr />
                 <div className="form-group">
                     <label>Titulo y notas</label>
@@ -191,7 +203,6 @@ export const CalendarModal = () => {
                     />
                     <small id="emailHelp" className="form-text text-muted">Una descripción corta</small>
                 </div>
-
                 <div className="form-group">
                     <textarea
                         type="text"
@@ -205,23 +216,21 @@ export const CalendarModal = () => {
                     <small id="emailHelp" className="form-text text-muted">Información adicional</small>
                 </div>
                 <div className="row justify-content-between ml-1 mr-1">
-                <button
-                    type="submit"
-                    className="btn btn-outline-primary  col-5 p-2"
-                >
-                    <i className="far fa-save mr-1"></i>
-                    <span> Guardar</span>
-                </button>
-                <button
-                    type="submit"
-                    className="btn btn-outline-danger col-5"
-                >
-                    <i className="far fa-trash-alt mr-1"></i>
-                    <span> Eliminar</span>
-                </button>
+                    <button
+                        type="submit"
+                        className="btn btn-outline-primary  col-5 p-2"
+                    >
+                        <i className="far fa-save mr-1"></i>
+                        <span> Guardar</span>
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn btn-outline-danger col-5"
+                    >
+                        <i className="far fa-trash-alt mr-1"></i>
+                        <span> Eliminar</span>
+                    </button>
                 </div>
-
-
             </form>
         </Modal>
     )

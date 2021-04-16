@@ -10,3 +10,8 @@ export const eventSetActive = (event) => ({
     type: types.eventSetActive,
     payload: event
 })
+
+export const cleanActiveNote = () => ({
+    type: types.cleanActiveNote,
+    
+})
