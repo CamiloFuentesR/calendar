@@ -15,16 +15,16 @@ import { uiCloseModal } from '../../actions/uiActions';
 moment.locale("es");
   
 //recomendado colocarlo en un componente aparte e importarlo
-/* const customStyles = {
+ const customStyles = {
     content: {
         top: '50%',
-        left: '50%',
+        left: '49%',
         right: 'auto',
-        bottom: '10%',
+        bottom: '20%',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)'
     }
-}; */
+}; 
 Modal.setAppElement('#root');
 
 const now = moment().minutes(0).seconds(0).add(1, 'hours'); //
@@ -107,23 +107,11 @@ export const CalendarModal = () => {
             isOpen={modalOpen}
             // onAfterOpen={sa}
             onRequestClose={closeModal}
-            // style={customStyles}
+            style={customStyles}
             closeTimeoutMS={200}
             className='modal '
             overlayClassName='modal-fondo'
-            style={{
-                overlay:{
-                    position: 'fixed',
-                    top:0,
-                    bottom:0
-                },
-                content:{
-                    top:10,
-                    bottom: 30,
-                    left:10,
-                    right:10
-                }
-            }}
+            
         >
             <h1> Nuevo evento </h1>
             <hr />
