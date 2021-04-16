@@ -13,6 +13,8 @@ import { useDispatch,useSelector } from 'react-redux';
 import { uiOpenModal } from '../../actions/uiActions';
 import { eventSetActive } from '../../actions/eventActions';
 import { AddNewFab } from '../ui/AddNewFab';
+
+import { SuccessMessage } from '../ui/SuccessMessage';
 moment.locale('es');
 
 const localizer = momentLocalizer(moment);
@@ -31,7 +33,6 @@ const localizer = momentLocalizer(moment);
 }] */
 
 export const CalendarScreen = (e) => {
-
     const dispatch = useDispatch();
 
     //leer eventos desde el store
@@ -39,12 +40,12 @@ export const CalendarScreen = (e) => {
     
     const [lastView, setLastView] = useState(localStorage.getItem('lastView',e) || 'month')
 
-    const onDoubleClick = (e) => {
+  /*   const onDoubleClick = (e) => {
         // console.log(e);
         dispatch(uiOpenModal()); 
 
     }
-
+ */
     const onSelectEvent = (e) => {
         dispatch(eventSetActive(e))
         dispatch(uiOpenModal());
@@ -80,7 +81,7 @@ export const CalendarScreen = (e) => {
                 endAcessor='end'
                 messages={messages}
                 eventPropGetter= {eventStyleGetter}
-                onDoubleClickEvent={onDoubleClick}
+                // onDoubleClickEvent={onDoubleClick}
                 onSelectEvent={onSelectEvent}
                 onView={onViewChange}
                 view={lastView}
@@ -90,6 +91,7 @@ export const CalendarScreen = (e) => {
             />
             <AddNewFab/>
             <CalendarModal/>
+           <SuccessMessage/>
         </div>
     )
 }

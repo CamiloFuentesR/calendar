@@ -9,8 +9,8 @@ import moment from 'moment';
 import 'moment/locale/es';
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
-import { uiCloseModal } from '../../actions/uiActions';
-import { cleanActiveNote, eventAddNew } from '../../actions/eventActions';
+import { uiCloseModal, uiOpenSuccesM } from '../../actions/uiActions';
+import { cleanActiveNote, eventAddNew, eventDeleted, eventUpdated } from '../../actions/eventActions';
 
 moment.locale("es");
 
@@ -48,7 +48,7 @@ export const CalendarModal = () => {
 
     const [dateStart, setDateStart] = useState(now.toDate());
     const [dateEnd, setDateEnd] = useState(endDate.toDate());
-
+    const [disabledButton, setDisabledButton] = useState(true)
     const [validTitle, setValidTitle] = useState(true)
     const [formValues, setFormValues] = useState(initEvent);
 
@@ -57,10 +57,12 @@ export const CalendarModal = () => {
     useEffect(() => {
         if(activeEvent){
             setFormValues(activeEvent)
-        }
-        console.log(activeEvent)
-    }, [activeEvent])
+            setDisabledButton(false)
+        }else{
+            setDisabledButton(true)
 
+        }
+    }, [activeEvent])
     const handleInputChange = ({ target }) => {
 
         setFormValues({
@@ -73,8 +75,9 @@ export const CalendarModal = () => {
         if (modalOpen) { //para que no se repita dos veces el dispatch
             dispatch(uiCloseModal());
             dispatch(cleanActiveNote());
+            setFormValues(initEvent);
+            setValidTitle(true)
         }
-        setFormValues(initEvent);
 
     }
 
@@ -92,6 +95,32 @@ export const CalendarModal = () => {
             end: e.toDate()
         });
     }
+
+    const handleDeleteEvent = () => {
+
+        Swal.fire({
+            title: '¿Estas seguro que deseas eliminar este evento?',
+            text: "¡Esta acción es irreversible!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Si, eliminar este evento!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(eventDeleted(activeEvent.id));
+                setFormValues(initEvent);
+                dispatch(uiCloseModal());
+        
+              Swal.fire(
+                'Eliminado!',
+                'Este Evento ha sido eliminado  ',
+                'success'
+              )
+            }
+          })
+    }
+    
     const handleSubmitForm = (e) => {
         e.preventDefault();
 
@@ -106,14 +135,19 @@ export const CalendarModal = () => {
             return setValidTitle(false)
         }
         //toDo Realizar grabacion en bdd
-        dispatch(eventAddNew({
-            ...formValues,
-            id: new Date().getTime(),
-            user: {
-                _id: 123,
-                name: 'Cam'
-            }
-        }));
+        if(activeEvent){
+            dispatch(eventUpdated(formValues))
+        }else{
+            dispatch(eventAddNew({
+                ...formValues,
+                id: new Date().getTime(),
+                user: {
+                    _id: 123,
+                    name: 'Cam'
+                }
+            }));
+        }
+        dispatch(uiOpenSuccesM());
         setValidTitle(true);
         closeModal();
     }
@@ -128,7 +162,7 @@ export const CalendarModal = () => {
             className='modal '
             overlayClassName='modal-fondo'
         >
-            <h1 className="text-center"> Nuevo evento </h1>
+            <h1 className="text-center"> {activeEvent ? 'Editando Evento' : 'Nuevo Evento'} </h1>
             <hr />
             <form
                 className="container"
@@ -224,8 +258,10 @@ export const CalendarModal = () => {
                         <span> Guardar</span>
                     </button>
                     <button
-                        type="submit"
+                        type="button"
                         className="btn btn-outline-danger col-5"
+                        onClick={handleDeleteEvent}
+                        disabled={disabledButton}
                     >
                         <i className="far fa-trash-alt mr-1"></i>
                         <span> Eliminar</span>

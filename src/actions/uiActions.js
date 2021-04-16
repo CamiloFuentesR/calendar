@@ -11,3 +11,12 @@ export const uiCloseModal = () => ({
     type: types.uiCloseModal,
     payload: false
 })
+
+export const uiOpenSuccesM = () => ({
+    type: types.uiOpenSuccesM,
+    payload: true
+})
+export const uiCloseSuccesM = () => ({
+    type: types.uiCloseSuccesM,
+    payload: false
+})

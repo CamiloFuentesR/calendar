@@ -11,5 +11,7 @@ export const messages = {
     time: 'Hora',
     event: 'Evento',
     noEventsInRange: 'No hay eventos en este rango',
+    minDateMessage: 'La fecha no debe ser anterior a la fecha mínima',
+    maxDateMessage: 'La fecha no debe ser posterior a la fecha máxima',
     showMore: total => `+ Ver más (${total})`
 };
