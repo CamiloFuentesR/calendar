@@ -209,14 +209,14 @@ export const CalendarModal = () => {
                     type="submit"
                     className="btn btn-outline-primary  col-5 p-2"
                 >
-                    <i className="far fa-save mr-2"></i>
+                    <i className="far fa-save mr-1"></i>
                     <span> Guardar</span>
                 </button>
                 <button
                     type="submit"
                     className="btn btn-outline-danger col-5"
                 >
-                    <i className="far fa-trash-alt mr-2"></i>
+                    <i className="far fa-trash-alt mr-1"></i>
                     <span> Eliminar</span>
                 </button>
                 </div>
