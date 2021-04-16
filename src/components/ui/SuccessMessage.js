@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import Button from '@material-ui/core/Button';
+// import React, { useState } from 'react'
+// import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,11 +27,11 @@ export const SuccessMessage = () => {
       }));
       
         const classes = useStyles();
-        const [open, setOpen] = useState(false);
+        // const [open, setOpen] = useState(false);
       
-        const handleClick = () => {
+       /*  const handleClick = () => {
           setOpen(successMessage);
-        };
+        }; */
       
         const handleClose = (event, reason) => {
             
@@ -40,7 +40,7 @@ export const SuccessMessage = () => {
           }
       
           dispatch(uiCloseSuccesM());
-          setOpen(successMessage);
+        //   setOpen(successMessage);
         };
 
 
