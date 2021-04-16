@@ -15,7 +15,7 @@ import { uiCloseModal } from '../../actions/uiActions';
 moment.locale("es");
   
 //recomendado colocarlo en un componente aparte e importarlo
-const customStyles = {
+/* const customStyles = {
     content: {
         top: '50%',
         left: '50%',
@@ -24,7 +24,7 @@ const customStyles = {
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)'
     }
-};
+}; */
 Modal.setAppElement('#root');
 
 const now = moment().minutes(0).seconds(0).add(1, 'hours'); //
