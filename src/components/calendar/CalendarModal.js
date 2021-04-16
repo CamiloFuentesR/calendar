@@ -113,7 +113,7 @@ export const CalendarModal = () => {
             overlayClassName='modal-fondo'
             
         >
-            <h1> Nuevo evento </h1>
+            <h1 className="text-center"> Nuevo evento </h1>
             <hr />
             <form 
                 className="container"
@@ -207,14 +207,14 @@ export const CalendarModal = () => {
                 <div className="row justify-content-between ml-1 mr-1">
                 <button
                     type="submit"
-                    className="btn btn-outline-primary col col-sm-5 p-2"
+                    className="btn btn-outline-primary  col-5 p-2"
                 >
                     <i className="far fa-save mr-2"></i>
                     <span> Guardar</span>
                 </button>
                 <button
                     type="submit"
-                    className="btn btn-outline-danger col col-sm-5"
+                    className="btn btn-outline-danger col-5"
                 >
                     <i className="far fa-trash-alt mr-2"></i>
                     <span> Eliminar</span>

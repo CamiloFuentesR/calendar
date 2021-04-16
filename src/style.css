@@ -97,4 +97,7 @@ html, body{
         outline: none;
         padding: 10px;
     }
+    h1{
+        font-size: larger;
+    }
 }
