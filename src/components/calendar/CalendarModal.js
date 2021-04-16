@@ -203,14 +203,23 @@ export const CalendarModal = () => {
                     ></textarea>
                     <small id="emailHelp" className="form-text text-muted">Información adicional</small>
                 </div>
-
+                <div className="row justify-content-between ml-1 mr-1">
                 <button
                     type="submit"
-                    className="btn btn-outline-primary btn-block"
+                    className="btn btn-outline-primary col-5 p-2"
                 >
-                    <i className="far fa-save"></i>
+                    <i className="far fa-save mr-2"></i>
                     <span> Guardar</span>
                 </button>
+                <button
+                    type="submit"
+                    className="btn btn-outline-danger  col-5"
+                >
+                    <i className="far fa-trash-alt mr-2"></i>
+                    <span> Eliminar</span>
+                </button>
+                </div>
+
 
             </form>
         </Modal>
