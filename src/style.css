@@ -100,4 +100,7 @@ html, body{
     h1{
         font-size: larger;
     }
+    span{
+        font-size: x-small;
+    }
 }
