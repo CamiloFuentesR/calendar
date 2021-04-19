@@ -7,7 +7,6 @@ export const startLogin = (value) => {
 
         await clienteAxios.post('/auth', value)
             .then(({data}) => {
-                console.log(data)
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
                 
@@ -31,7 +30,6 @@ export const startRegister = ({rName:name,rEmail: email,rPassword1:password}) =>
     return async (dispatch) => {
         await clienteAxios.post('/auth/new', {name,email,password})
             .then(({data}) => {
-                console.log(data)
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
                 
@@ -51,7 +49,6 @@ export const startChecking = () => {
     return async (dispatch) => {
         await clienteAxiosToken.get('/auth/renew')
             .then(({data}) => {
-                console.log(data)
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
                 
@@ -61,8 +58,6 @@ export const startChecking = () => {
                 }));
             })
             .catch(({response:{data:{msg}}}) => {
-                
-                Swal.fire('Error',msg,'error');
                 dispatch(checkingFinish());
             });
     }
