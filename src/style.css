@@ -84,7 +84,9 @@ html, body{
     position: fixed;
     right: 25px;
 }
-
+.swal2-popup {
+    font-size: 0.8rem;
+}
 @media(max-width: 500px){
     .modal {
         background: white;
