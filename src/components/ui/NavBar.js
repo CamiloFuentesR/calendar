@@ -7,8 +7,7 @@ export const NavBar = () => {
     const dispatch = useDispatch();
      
     const handleLogout = () => {
-        localStorage.setItem('token','');
-        localStorage.setItem('token-init-date','') 
+        
          dispatch(startLogout())
     }
 

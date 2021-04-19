@@ -47,6 +47,13 @@ export const startRegister = ({rName:name,rEmail: email,rPassword1:password}) =>
 
 export const startChecking = () => {
     return async (dispatch) => {
+        const isCurrentToken = !!(localStorage.getItem('token') || '');
+
+        if (!isCurrentToken){
+            dispatch(checkingFinish()); 
+            return;
+        }
+
         await clienteAxiosToken.get('/auth/renew')
             .then(({data}) => {
                 localStorage.setItem('token', data.token);

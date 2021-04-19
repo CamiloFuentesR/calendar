@@ -12,7 +12,6 @@ export const SuccessMessage = () => {
     const dispatch = useDispatch();
 
     const {successMessage} = useSelector(state => state.root.ui)
-    console.log(successMessage)
     function Alert(props) {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
       }

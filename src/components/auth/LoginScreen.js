@@ -28,7 +28,6 @@ export const LoginScreen = () => {
 
     const handleLoginSubmit = (e) => {
         e.preventDefault();
-        console.log(formLoginValues)
         dispatch(startLogin(formLoginValues));
 
     } 
