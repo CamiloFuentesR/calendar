@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
 import { startChecking } from '../actions/authActions'
 import { LoginScreen } from '../components/auth/LoginScreen'
 import { CalendarScreen } from '../components/calendar/CalendarScreen'
+import { Loading } from '../components/calendar/icono de carga/Loading'
 import { PrivateRouter } from './PrivateRouter'
 import { PublicRouter } from './PublicRouter'
 
@@ -18,7 +19,7 @@ export const AppRouter = () => {
     }, [dispatch])
     
     if(checking){
-        return <h5>espere</h5>
+        return <Loading/>
     }
 
     return (

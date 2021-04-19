@@ -4,21 +4,37 @@ import { types } from "../types/types"
 
 export const startLogin = (value) => {
     return async (dispatch) => {
-
-        await clienteAxios.post('/auth', value)
-            .then(({data}) => {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('token-init-date', new Date().getTime());
-                
-                dispatch(login({
-                    uid:data.uid,
-                    name: data.name
-                }));
-            })
-            .catch(({response:{data:{msg}}}) => {
-                
-                Swal.fire('Error',msg,'error');
-            });
+        // const res = await clienteAxios.post('/auth', value).catch(e=>console.log(e.request));
+      /*   console.log(res)
+        if(!! res) {
+            return ;
+        } */
+       /*  const res= await clienteAxios.get('/auth').then(res=>console.log(res)).catch(error => {
+             if(error.response === undefined){
+                 return console.log('error de conexion')
+             }
+         });
+            if(!res){
+                return Swal.fire('Error','Error de conexion con la API','error');
+            } */
+            await clienteAxios.post('/auth', value)
+                .then(({data}) => {
+                   
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('token-init-date', new Date().getTime());
+                    
+                    dispatch(login({
+                        uid:data.uid,
+                        name: data.name
+                    }));
+                })
+                .catch(({response:{data:{msg}}}) => {
+                    
+                    Swal.fire('Error',msg,'error');
+                });
+        
+      
+            
 
         //  const resp = await fetchSinToken('auth',value,'POST')
         //  const body = await resp.json();
