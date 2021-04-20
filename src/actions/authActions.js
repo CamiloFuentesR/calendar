@@ -4,19 +4,13 @@ import { types } from "../types/types"
 
 export const startLogin = (value) => {
     return async (dispatch) => {
-        // const res = await clienteAxios.post('/auth', value).catch(e=>console.log(e.request));
-      /*   console.log(res)
-        if(!! res) {
-            return ;
-        } */
-       /*  const res= await clienteAxios.get('/auth').then(res=>console.log(res)).catch(error => {
-             if(error.response === undefined){
-                 return console.log('error de conexion')
-             }
-         });
-            if(!res){
-                return Swal.fire('Error','Error de conexion con la API','error');
-            } */
+        
+        // const isCurrentToken = !!(localStorage.getItem('token') || '');
+
+        // if (!isCurrentToken){
+        //     dispatch(checkingFinish()); 
+        //     return;
+        // }
             await clienteAxios.post('/auth', value)
                 .then(({data}) => {
                    

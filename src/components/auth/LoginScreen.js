@@ -44,7 +44,7 @@ export const LoginScreen = () => {
 
 
     return (
-        <div className="container login-container">
+        <div className="container login-container animate__animated animate__fadeIn">
             <div className="row">
                 <div className="col-md-6 login-form-1">
                     <h3>Ingreso</h3>

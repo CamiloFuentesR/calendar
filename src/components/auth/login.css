@@ -50,3 +50,7 @@
     font-weight: 600;
     text-decoration: none;
 }
+
+.animate__animated .animate__fadeIn{
+    --animate-duration: 0.5s;
+}

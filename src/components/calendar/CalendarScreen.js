@@ -59,7 +59,7 @@ export const CalendarScreen = (e) => {
     const eventStyleGetter = (event,start,end,isSelected) => {
         const style = {
             backgroundColor:'#367CF7',
-            borderRadius: '0px',
+            borderRadius: '5px',
             opacity: 0.8,
             display: 'block',
             color: 'white'
@@ -75,6 +75,7 @@ export const CalendarScreen = (e) => {
             <NavBar/>
 
             <Calendar
+                className="animate__animated animate__fadeIn"
                 localizer={localizer}
                 events={events}
                 startAccessor='start'
