@@ -1,0 +1,5 @@
+
+  .animate__animated.animate__fadeIn{
+    --animate-duration: 2s ;
+    transition: opacity 4s ease-in !important;
+}

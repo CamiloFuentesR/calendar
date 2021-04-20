@@ -15,6 +15,9 @@ import { eventSetActive } from '../../actions/eventActions';
 import { AddNewFab } from '../ui/AddNewFab';
 
 import { SuccessMessage } from '../ui/SuccessMessage';
+
+import './style.css'
+
 moment.locale('es');
 
 const localizer = momentLocalizer(moment);
