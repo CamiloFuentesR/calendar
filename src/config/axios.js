@@ -8,7 +8,7 @@ const clienteAxios = axios.create({
 
 
 
-const token = localStorage.getItem('token') || '';
+const token = localStorage.getItem('token') ;
 
 export const clienteAxiosToken = axios.create({
     baseURL: process.env.REACT_APP_API_URL,

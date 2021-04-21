@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import { clienteAxiosToken } from "../config/axios";
 import { prepareEvents } from "../helpers/prepareEvents";
 import { types } from "../types/types";
+import { fetchConToken } from '../helpers/fetch';
 
 export const eventStartAddNew = (event) => {
     return async (dispatch, getState) => {
@@ -56,9 +57,11 @@ export const eventDeleted = (id) => ({
 });
 
 export const eventStartLoading = () => {
+    
     return async (dispatch) => {
 
         try {
+
             /* await clienteAxiosToken.get('/events')
                 .then(({data})=> {
                         const event =  dispatch(prepareEvents(data.events));
@@ -67,20 +70,22 @@ export const eventStartLoading = () => {
                 .catch(e=>{
                     console.log(e)
                 }) */
+                  /*   const token =localStorage.getItem('token')
+                    const { data } = await clienteAxiosToken.get('events',{
+                        headers:{
+                            'x-token':token
+                        }
+                    });
+                    const events = prepareEvents(data.events);
+                    dispatch(eventLoaded(events)); */
 
-            const { data } = await clienteAxiosToken.get('events');
-            const events = prepareEvents(data.events);
-            dispatch(eventLoaded(events));
-
-
-
-            /*      const resp = await fetchConToken( 'events' );
+                 const resp = await fetchConToken( 'events' );
                  const body = await resp.json();
      
                  const events = prepareEvents( body.events );
-                 dispatch( eventLoaded( events ) ); */
+                 dispatch( eventLoaded( events ) );
         } catch (error) {
-            console.log(error)
+            console.log(error.response)
         }
     }
 }
