@@ -3,7 +3,7 @@ import { types } from "../types/types";
 const initialState = {
     modalOpen: false,
     successMessage: false,
-    loading: null
+    loading: false
 
 }
 

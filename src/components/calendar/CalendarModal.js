@@ -44,6 +44,7 @@ export const CalendarModal = () => {
 
     const { modalOpen } = useSelector(state => state.root.ui)
     const {activeEvent} = useSelector(state => state.root.calendar)
+    const {uid,name} = useSelector(state => state.root.auth)
     const dispatch = useDispatch();
 
     const [dateStart, setDateStart] = useState(now.toDate());
@@ -142,8 +143,8 @@ export const CalendarModal = () => {
                 ...formValues,
                 id: new Date().getTime(),
                 user: {
-                    _id: 123,
-                    name: 'Cam'
+                    _id: uid,
+                    name: name
                 }
             }));
         }

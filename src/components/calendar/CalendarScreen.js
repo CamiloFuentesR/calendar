@@ -17,6 +17,7 @@ import { AddNewFab } from '../ui/AddNewFab';
 import { SuccessMessage } from '../ui/SuccessMessage';
 
 import './style.css'
+import Cargando from '../ui/Cargando';
 
 moment.locale('es');
 
@@ -42,6 +43,9 @@ export const CalendarScreen = (e) => {
     const {events} = useSelector(state => state.root.calendar)
     
     const [lastView, setLastView] = useState(localStorage.getItem('lastView',e) || 'month')
+    // const {loading} = useSelector(state => state.root.ui)
+    const {checking} = useSelector(state => state.root.auth);
+
 
   /*   const onDoubleClick = (e) => {
         // console.log(e);
@@ -74,11 +78,15 @@ export const CalendarScreen = (e) => {
     };
 
     return (
+        <>
+        {
+            checking && <Cargando/>
+        }
         <div className="calendar-screen">
             <NavBar/>
 
             <Calendar
-                className="animate__animated animate__fadeIn"
+                // className="animate__animated animate__fadeIn"
                 localizer={localizer}
                 events={events}
                 startAccessor='start'
@@ -97,5 +105,6 @@ export const CalendarScreen = (e) => {
             <CalendarModal/>
            <SuccessMessage/>
         </div>
+        </>
     )
 }

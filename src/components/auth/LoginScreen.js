@@ -1,14 +1,15 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { startLogin, startRegister } from '../../actions/authActions';
 import { useForm } from '../../hooks/useForm';
+import Cargando from '../ui/Cargando';
 import './login.css';
 
 export const LoginScreen = () => {
 
     const dispatch = useDispatch();
-    
+    const loading = useSelector(state => state.root.ui)
     const [ formLoginValues, handleLoginInputChange ] = useForm( {
         email: 'camilo@gmail.com',
         password: 'Camilo1#'
@@ -40,6 +41,10 @@ export const LoginScreen = () => {
     } 
 
     return (
+        <>
+        {
+        loading && <Cargando/>
+        }
         <div className="container login-container animate__animated animate__fadeIn">
             <div className="row">
                 <div className="col-md-6 login-form-1">
@@ -130,5 +135,6 @@ export const LoginScreen = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 }
