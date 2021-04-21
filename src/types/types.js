@@ -6,6 +6,8 @@ export const types = {
     uiCloseModal : '[ui] Close Modal',
     uiOpenSuccesM: '[ui] Open Success Menssage',
     uiCloseSuccesM: '[ui] Close Success Menssage',
+    startLoading: '[ui] start load content',
+    endLoading: '[ui] end load content',
 
     eventSetActive: '[event] Set Active',
     eventAddNew: '[event] Add new',
@@ -19,6 +21,7 @@ export const types = {
     authRegister: '[auth] Register',
     authStartRegister: '[auth] Start register',
     authStartTokenRenew: '[auth] Start token renew',
-    authLogout: '[auth] Logout'
+    authLogout: '[auth] Logout',
+
 
 } 

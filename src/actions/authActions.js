@@ -1,10 +1,11 @@
 import Swal from "sweetalert2";
 import clienteAxios, { clienteAxiosToken } from "../config/axios"
 import { types } from "../types/types"
+import { endLoading, startLoading } from "./uiActions";
 
 export const startLogin = (value) => {
     return async (dispatch) => {
-        
+        dispatch(startLoading())
         // const isCurrentToken = !!(localStorage.getItem('token') || '');
 
         // if (!isCurrentToken){
@@ -21,6 +22,7 @@ export const startLogin = (value) => {
                         uid:data.uid,
                         name: data.name
                     }));
+                    dispatch(endLoading());
                 })
                 .catch(({response:{data:{msg}}}) => {
                     
@@ -58,7 +60,7 @@ export const startRegister = ({rName:name,rEmail: email,rPassword1:password}) =>
 export const startChecking = () => {
     return async (dispatch) => {
         const isCurrentToken = !!(localStorage.getItem('token') || '');
-
+        
         if (!isCurrentToken){
             dispatch(checkingFinish()); 
             return;
@@ -102,3 +104,4 @@ const login = (value) => ({
     type: types.authLogin,
     payload: value
 });
+

@@ -20,3 +20,12 @@ export const uiCloseSuccesM = () => ({
     type: types.uiCloseSuccesM,
     payload: false
 })
+
+export const startLoading = () => ({
+    type: types.startLoading,
+    payload: true
+})
+export const endLoading = () => ({
+    type: types.endLoading,
+    payload: false
+})

@@ -12,13 +12,13 @@ export const AppRouter = () => {
 
     const dispatch = useDispatch();
     const {checking,uid} = useSelector(state => state.root.auth);
-
+    const {loading} = useSelector(state => state.root.ui)
     useEffect(() => {
         
         dispatch(startChecking())
     }, [dispatch])
     
-    if(checking){
+    if( checking ||  loading){
         return <Loading/>
     }
 

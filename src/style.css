@@ -117,7 +117,11 @@ html, body{
 
 
 /* ----loding----- */
-
+.fondo{
+    height: 100vh;
+    width: 100vw;
+    background-color: aqua;
+}
 
 .sk-circle {
     margin: 100px auto;
