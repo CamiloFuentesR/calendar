@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Calendar,momentLocalizer} from 'react-big-calendar';
 import moment from 'moment';
 
@@ -11,7 +11,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'moment/locale/es';
 import { useDispatch,useSelector } from 'react-redux';
 import { uiOpenModal } from '../../actions/uiActions';
-import { eventSetActive } from '../../actions/eventActions';
+import { eventSetActive, eventStartLoading } from '../../actions/eventActions';
 import { AddNewFab } from '../ui/AddNewFab';
 
 import { SuccessMessage } from '../ui/SuccessMessage';
@@ -41,6 +41,10 @@ export const CalendarScreen = (e) => {
 
     //leer eventos desde el store
     const {events} = useSelector(state => state.root.calendar)
+
+    useEffect(() => {
+        dispatch(eventStartLoading())
+    }, [dispatch])
     
     const [lastView, setLastView] = useState(localStorage.getItem('lastView',e) || 'month')
     // const {loading} = useSelector(state => state.root.ui)

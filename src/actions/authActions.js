@@ -12,25 +12,25 @@ export const startLogin = (value) => {
         //     dispatch(checkingFinish()); 
         //     return;
         // }
-            await clienteAxios.post('/auth', value)
-                .then(({data}) => {
-                   
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('token-init-date', new Date().getTime());
-                    
-                    dispatch(login({
-                        uid:data.uid,
-                        name: data.name
-                    }));
-                    dispatch(endLoading());
-                })
-                .catch(({response:{data:{msg}}}) => {
-                    
-                    Swal.fire('Error',msg,'error');
-                });
-        
-      
-            
+        await clienteAxios.post('/auth', value)
+            .then(({ data }) => {
+
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('token-init-date', new Date().getTime());
+
+                dispatch(login({
+                    uid: data.uid,
+                    name: data.name
+                }));
+                dispatch(endLoading());
+            })
+            .catch(({ response: { data: { msg } } }) => {
+
+                Swal.fire('Error', msg, 'error');
+            });
+
+
+
 
         //  const resp = await fetchSinToken('auth',value,'POST')
         //  const body = await resp.json();
@@ -38,21 +38,21 @@ export const startLogin = (value) => {
     }
 }
 
-export const startRegister = ({rName:name,rEmail: email,rPassword1:password}) => {
+export const startRegister = ({ rName: name, rEmail: email, rPassword1: password }) => {
     return async (dispatch) => {
-        await clienteAxios.post('/auth/new', {name,email,password})
-            .then(({data}) => {
+        await clienteAxios.post('/auth/new', { name, email, password })
+            .then(({ data }) => {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
-                
+
                 dispatch(login({
-                    uid:data.uid,
+                    uid: data.uid,
                     name: data.name
                 }));
             })
-            .catch(({response:{data:{msg}}}) => {
-                
-                Swal.fire('Error',msg,'error');
+            .catch(({ response: { data: { msg } } }) => {
+
+                Swal.fire('Error', msg, 'error');
             });
     }
 }
@@ -60,23 +60,23 @@ export const startRegister = ({rName:name,rEmail: email,rPassword1:password}) =>
 export const startChecking = () => {
     return async (dispatch) => {
         const isCurrentToken = !!(localStorage.getItem('token') || '');
-        
-        if (!isCurrentToken){
-            dispatch(checkingFinish()); 
+
+        if (!isCurrentToken) {
+            dispatch(checkingFinish());
             return;
         }
 
         await clienteAxiosToken.get('/auth/renew')
-            .then(({data}) => {
+            .then(({ data }) => {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
-                
+
                 dispatch(login({
-                    uid:data.uid,
+                    uid: data.uid,
                     name: data.name
                 }));
             })
-            .catch(({response:{data:{msg}}}) => {
+            .catch(({ response: { data: { msg } } }) => {
                 dispatch(checkingFinish());
             });
     }
@@ -85,13 +85,13 @@ export const startChecking = () => {
 
 
 export const startLogout = () => {
-    return(dispatch) => {
+    return (dispatch) => {
         localStorage.clear();
         dispatch(logout())
     }
 }
 
- const logout = () => ({
+const logout = () => ({
     type: types.authLogout
 })
 

@@ -5,25 +5,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
-  },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
 }));
 
 export default function Cargando() {
 
-  const {loading} = useSelector(state => state.root.ui)
-  const classes = useStyles();
+    const { loading } = useSelector(state => state.root.ui)
+    const classes = useStyles();
+    return (
+        <div>
 
- 
-
-  return (
-    <div>
-     
-      <Backdrop className={classes.backdrop} open={loading} >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    </div>
-  );
+            <Backdrop className={classes.backdrop} open={loading} >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        </div>
+    );
 }

@@ -10,131 +10,131 @@ export const LoginScreen = () => {
 
     const dispatch = useDispatch();
     const loading = useSelector(state => state.root.ui)
-    const [ formLoginValues, handleLoginInputChange ] = useForm( {
+    const [formLoginValues, handleLoginInputChange] = useForm({
         email: 'camilo@gmail.com',
         password: 'Camilo1#'
-    } );
-    const [ formRegisterValues, handleRegisterInputChange ] = useForm( {
+    });
+    const [formRegisterValues, handleRegisterInputChange] = useForm({
         rName: 'Camilo2',
         rEmail: 'camilo2@gmail.com',
         rPassword1: 'Camilo1#',
         rPassword2: 'Camilo1#'
-    } );
+    });
 
-    const {rName,rEmail,rPassword1,rPassword2} = formRegisterValues;
+    const { rName, rEmail, rPassword1, rPassword2 } = formRegisterValues;
 
-    const {email,password} = formLoginValues;
+    const { email, password } = formLoginValues;
 
     const handleLoginSubmit = (e) => {
         e.preventDefault();
         dispatch(startLogin(formLoginValues));
 
-    } 
+    }
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
-        if(rPassword1 !== rPassword2){
-            return Swal.fire('Error','Las contraaseñas deben ser iguales','error')
+        if (rPassword1 !== rPassword2) {
+            return Swal.fire('Error', 'Las contraaseñas deben ser iguales', 'error')
         }
 
-         dispatch(startRegister(formRegisterValues));
+        dispatch(startRegister(formRegisterValues));
 
-    } 
+    }
 
     return (
         <>
-        {
-        loading && <Cargando/>
-        }
-        <div className="container login-container animate__animated animate__fadeIn">
-            <div className="row">
-                <div className="col-md-6 login-form-1">
-                    <h3>Ingreso</h3>
-                    <form onSubmit={handleLoginSubmit}>
-                        <div className="form-group">
-                            <input 
-                                type="text"
-                                className="form-control"
-                                placeholder="Correo"
-                                name="email"
-                                value={email}
-                                onChange={handleLoginInputChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Contraseña"
-                                name="password"
-                                value={password}
-                                onChange={handleLoginInputChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input 
-                                type="submit"
-                                className="btnSubmit"
-                                value="Login" 
-                            />
-                        </div>
-                    </form>
-                </div>
+            {
+                loading && <Cargando />
+            }
+            <div className="container login-container animate__animated animate__fadeIn">
+                <div className="row">
+                    <div className="col-md-6 login-form-1">
+                        <h3>Ingreso</h3>
+                        <form onSubmit={handleLoginSubmit}>
+                            <div className="form-group">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Correo"
+                                    name="email"
+                                    value={email}
+                                    onChange={handleLoginInputChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    placeholder="Contraseña"
+                                    name="password"
+                                    value={password}
+                                    onChange={handleLoginInputChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="submit"
+                                    className="btnSubmit"
+                                    value="Login"
+                                />
+                            </div>
+                        </form>
+                    </div>
 
-                <div className="col-md-6 login-form-2">
-                    <h3>Registro</h3>
-                    <form onSubmit={handleRegisterSubmit}>
-                        <div className="form-group">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Nombre"
-                                name="rName"
-                                value={rName}
-                                onChange={handleRegisterInputChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="email"
-                                className="form-control"
-                                placeholder="Correo"
-                                name="rEmail"
-                                value={rEmail}
-                                onChange={handleRegisterInputChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Contraseña"
-                                name="rPassword1" 
-                                value={rPassword1}
-                                onChange={handleRegisterInputChange}
-                            />
-                        </div>
+                    <div className="col-md-6 login-form-2">
+                        <h3>Registro</h3>
+                        <form onSubmit={handleRegisterSubmit}>
+                            <div className="form-group">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Nombre"
+                                    name="rName"
+                                    value={rName}
+                                    onChange={handleRegisterInputChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    placeholder="Correo"
+                                    name="rEmail"
+                                    value={rEmail}
+                                    onChange={handleRegisterInputChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    placeholder="Contraseña"
+                                    name="rPassword1"
+                                    value={rPassword1}
+                                    onChange={handleRegisterInputChange}
+                                />
+                            </div>
 
-                        <div className="form-group">
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Repita la contraseña" 
-                                name="rPassword2"
-                                value={rPassword2}
-                                onChange={handleRegisterInputChange}
-                            />
-                        </div>
+                            <div className="form-group">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    placeholder="Repita la contraseña"
+                                    name="rPassword2"
+                                    value={rPassword2}
+                                    onChange={handleRegisterInputChange}
+                                />
+                            </div>
 
-                        <div className="form-group">
-                            <input 
-                                type="submit" 
-                                className="btnSubmit" 
-                                value="Crear cuenta" />
-                        </div>
-                    </form>
+                            <div className="form-group">
+                                <input
+                                    type="submit"
+                                    className="btnSubmit"
+                                    value="Crear cuenta" />
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
         </>
     )
 }

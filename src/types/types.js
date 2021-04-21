@@ -9,11 +9,13 @@ export const types = {
     startLoading: '[ui] start load content',
     endLoading: '[ui] end load content',
 
+    eventStartAddNew: '[event] Start add new',
     eventSetActive: '[event] Set Active',
     eventAddNew: '[event] Add new',
     eventUpdated: '[event] Event Updated',
     cleanActiveNote: '[event] Clean ActiveNote',
     eventDeleted: '[event] Event Deleted',
+    eventLoaded: '[event] Events loaded',
 
     authCheckingFinish: '[auth] finish login state',
     authStartLogin: '[auth] Start login',

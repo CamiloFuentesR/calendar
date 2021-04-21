@@ -2,9 +2,7 @@ import { types } from "../types/types";
 
 
 const initialState = {
-    events: [
-
-    ],
+    events: [],
     activeEvent : null
 }
 
@@ -50,6 +48,12 @@ export const calendarReducer = (state = initialState, action) => {
                 activeEvent:null
             }
         }
+
+        case types.eventLoaded:
+            return {
+                ...state,
+                events: [ ...action.payload ]
+            }
         default:
             return state;
     }

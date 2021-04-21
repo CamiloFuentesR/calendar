@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal';
 import {
     DateTimePicker,
@@ -10,7 +10,7 @@ import 'moment/locale/es';
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal, uiOpenSuccesM } from '../../actions/uiActions';
-import { cleanActiveNote, eventAddNew, eventDeleted, eventUpdated } from '../../actions/eventActions';
+import { cleanActiveNote, eventStartAddNew, eventDeleted, eventUpdated } from '../../actions/eventActions';
 
 moment.locale("es");
 
@@ -43,8 +43,7 @@ export const CalendarModal = () => {
     const [locale] = useState("es");
 
     const { modalOpen } = useSelector(state => state.root.ui)
-    const {activeEvent} = useSelector(state => state.root.calendar)
-    const {uid,name} = useSelector(state => state.root.auth)
+    const { activeEvent } = useSelector(state => state.root.calendar)
     const dispatch = useDispatch();
 
     const [dateStart, setDateStart] = useState(now.toDate());
@@ -56,10 +55,10 @@ export const CalendarModal = () => {
     const { notes, title, start, end } = formValues;
 
     useEffect(() => {
-        if(activeEvent){
+        if (activeEvent) {
             setFormValues(activeEvent)
             setDisabledButton(false)
-        }else{
+        } else {
             setDisabledButton(true)
 
         }
@@ -107,21 +106,21 @@ export const CalendarModal = () => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: '¡Si, eliminar este evento!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(eventDeleted(activeEvent.id));
                 setFormValues(initEvent);
                 dispatch(uiCloseModal());
-        
-              Swal.fire(
-                'Eliminado!',
-                'Este Evento ha sido eliminado  ',
-                'success'
-              )
+
+                Swal.fire(
+                    'Eliminado!',
+                    'Este Evento ha sido eliminado  ',
+                    'success'
+                )
             }
-          })
+        })
     }
-    
+
     const handleSubmitForm = (e) => {
         e.preventDefault();
 
@@ -136,17 +135,10 @@ export const CalendarModal = () => {
             return setValidTitle(false)
         }
         //toDo Realizar grabacion en bdd
-        if(activeEvent){
+        if (activeEvent) {
             dispatch(eventUpdated(formValues))
-        }else{
-            dispatch(eventAddNew({
-                ...formValues,
-                id: new Date().getTime(),
-                user: {
-                    _id: uid,
-                    name: name
-                }
-            }));
+        } else {
+            dispatch(eventStartAddNew(formValues));
         }
         dispatch(uiOpenSuccesM());
         setValidTitle(true);
