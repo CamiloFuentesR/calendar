@@ -31,7 +31,6 @@ export const LoginScreen = () => {
     } 
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
-        console.log(formRegisterValues)
         if(rPassword1 !== rPassword2){
             return Swal.fire('Error','Las contraaseñas deben ser iguales','error')
         }

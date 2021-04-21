@@ -16,7 +16,7 @@ export const PublicRouter = ({
 
                 (!isAuthenticated)
                     ? (<Component {...props} />)
-                    : (<Redirect to="/journal" />)
+                    : (<Redirect to="/" />)
             )}
         />
     )
