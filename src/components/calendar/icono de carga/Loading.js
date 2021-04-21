@@ -16,7 +16,5 @@ export const Loading = () => {
                 <div className="sk-circle11 sk-child"></div>
                 <div className="sk-circle12 sk-child"></div>
             </div>
-
-
     )
 }

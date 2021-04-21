@@ -5,8 +5,6 @@ import { startLogin, startRegister } from '../../actions/authActions';
 import { useForm } from '../../hooks/useForm';
 import './login.css';
 
-
-
 export const LoginScreen = () => {
 
     const dispatch = useDispatch();
@@ -41,7 +39,6 @@ export const LoginScreen = () => {
          dispatch(startRegister(formRegisterValues));
 
     } 
-
 
     return (
         <div className="container login-container animate__animated animate__fadeIn">
