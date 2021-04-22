@@ -87,6 +87,7 @@ html, body{
     padding: 17px;
     position: fixed;
     right: 25px;
+    z-index: 99999;
 }
 .swal2-popup {
     font-size: 0.8rem;
@@ -241,4 +242,13 @@ html, body{
     }
   }
 
+
+  .modal-close{
+      width: 25em;
+      margin-left: 2.6em;
+      border-radius: 7px;
+      opacity: .7;
+      background-color: rgb(255, 2, 2);
+      color: white;
+  }
   

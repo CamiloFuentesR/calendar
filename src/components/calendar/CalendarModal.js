@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal, uiOpenSuccesM } from '../../actions/uiActions';
 import { cleanActiveNote, eventStartAddNew, eventDeleted, eventStartUpdate } from '../../actions/eventActions';
 
-moment.locale("es");
+moment.locale("es-ES");
 
 //recomendado colocarlo en un componente aparte e importarlo
 const customStyles = {
@@ -44,7 +44,9 @@ export const CalendarModal = () => {
 
     const { modalOpen } = useSelector(state => state.root.ui)
     const { activeEvent } = useSelector(state => state.root.calendar)
+    const { uid } = useSelector(state => state.root.auth)
     const dispatch = useDispatch();
+    const [validateUser, setvalidateUser] = useState(false)
 
     const [dateStart, setDateStart] = useState(now.toDate());
     const [dateEnd, setDateEnd] = useState(endDate.toDate());
@@ -60,15 +62,16 @@ export const CalendarModal = () => {
             setDateEnd(activeEvent.end)
             setFormValues(activeEvent)
             setDisabledButton(false)
+            if (activeEvent.user._id === uid) {
+                setvalidateUser(true)
+            }
         } else {
             setFormValues(initEvent)
             setDateStart(now.toDate());
             setDateEnd(endDate.toDate())
-
             setDisabledButton(true)
-
         }
-    }, [activeEvent])
+    }, [activeEvent, uid])
     const handleInputChange = ({ target }) => {
 
         setFormValues({
@@ -84,7 +87,6 @@ export const CalendarModal = () => {
             setFormValues(initEvent);
             setValidTitle(true)
         }
-
     }
 
     const handleStartDateChange = (e) => {
@@ -161,7 +163,14 @@ export const CalendarModal = () => {
             className='modal '
             overlayClassName='modal-fondo'
         >
-            <h1 className="text-center"> {activeEvent ? 'Editando Evento' : 'Nuevo Evento'} </h1>
+
+            {
+                (activeEvent && validateUser)
+                && <h1 className="text-center"> {activeEvent ? 'Editar Evento' : 'Nuevo Evento'} </h1>
+            }
+            {
+                (activeEvent && !validateUser) && <h1 className="text-center"> {`Evento de ${activeEvent.user.name}`}</h1>
+            }
             <hr />
             <form
                 className="container"
@@ -169,25 +178,7 @@ export const CalendarModal = () => {
             >
                 <div className="form-group">
                     <label>Fecha y hora inicio</label>
-                    {/* <DateTimePicker
-                        onChange={handleStartDateChange}
-                        value={dateStart}
-                        className='form-control'
-                        format="y-MM-dd h:mm:ss a"
-                        amPmAriaLabel="Select AM/PM"
-                        minuteAriaLabel="Minute"
-                    /> */}
                     <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}>
-                        {/*    <DatePicker 
-                            value={selectedDate} 
-                            onChange={handleDateChange} 
-                            className="form-control"
-                        />
-                        <TimePicker 
-                            value={selectedDate} 
-                            onChange={handleDateChange} 
-                            className="form-control"
-                        /> */}
                         <DateTimePicker
                             autoOk
                             _locale={"es"}
@@ -195,23 +186,12 @@ export const CalendarModal = () => {
                             onChange={handleStartDateChange}
                             className="form-control in"
                             format="y-MM-DD - ddd - h:mm:ss a"
-
                         />
                     </MuiPickersUtilsProvider>
                 </div>
                 <div className="form-group">
                     <label>Fecha y hora fin</label>
-                    {/* <DateTimePicker
-                        onChange={handleEndDateChange}
-                        value={dateEnd}
-                        minDate={dateStart}
-                        className='form-control'
-                        format="y-MM-dd h:mm:ss a"
-                        amPmAriaLabel="Select AM/PM"
-                    /> */}
                     <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}>
-                        {/*      <DatePicker value={selectedDate} onChange={handleDateChange} />
-                        <TimePicker value={selectedDate} onChange={handleDateChange} /> */}
                         <DateTimePicker
                             autoOk
                             value={dateEnd}
@@ -249,24 +229,41 @@ export const CalendarModal = () => {
                     <small id="emailHelp" className="form-text text-muted">Información adicional</small>
                 </div>
                 <div className="row justify-content-between ml-1 mr-1">
-                    <button
-                        type="submit"
-                        className="btn btn-outline-primary  col-5 p-2"
-                    >
-                        <i className="far fa-save mr-1"></i>
-                        <span> Guardar</span>
-                    </button>
-                    <button
-                        type="button"
-                        className="btn btn-outline-danger col-5"
-                        onClick={handleDeleteEvent}
-                        disabled={disabledButton}
-                    >
-                        <i className="far fa-trash-alt mr-1"></i>
-                        <span> Eliminar</span>
-                    </button>
+                    {
+                        validateUser &&
+                        <>
+                            <button
+                                type="submit"
+                                className="btn btn-outline-primary  col-5 p-2"
+                            >
+                                <i className="far fa-save mr-1"></i>
+                                <span> Guardar</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-outline-danger col-5"
+                                onClick={handleDeleteEvent}
+                                disabled={disabledButton}
+                            >
+                                <i className="far fa-trash-alt mr-1"></i>
+                                <span> Eliminar</span>
+                            </button>
+                        </>
+                    }
                 </div>
             </form>
+            {
+                !validateUser &&
+                <div className="row justify-content-center">
+                    <button
+                        type="button"
+                        className="btn btn-outline-danger col-10  "
+                        onClick={closeModal}
+                    >
+                        <span>X Cerrar Evento</span>
+                    </button>
+                </div>
+            }
         </Modal>
     )
 }

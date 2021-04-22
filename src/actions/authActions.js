@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import clienteAxios, { clienteAxiosToken } from "../config/axios"
+import clienteAxios, { clienteAxiosToken, token } from "../config/axios"
 import { types } from "../types/types"
 import { endLoading, startLoading } from "./uiActions";
 
@@ -44,7 +44,6 @@ export const startRegister = ({ rName: name, rEmail: email, rPassword1: password
             .then(({ data }) => {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
-
                 dispatch(login({
                     uid: data.uid,
                     name: data.name
@@ -59,7 +58,7 @@ export const startRegister = ({ rName: name, rEmail: email, rPassword1: password
 
 export const startChecking = () => {
     return async (dispatch) => {
-        const isCurrentToken = !!(localStorage.getItem('token') || '');
+        const isCurrentToken = !!token || '';
         if (!isCurrentToken) {
             dispatch(checkingFinish());
             return;

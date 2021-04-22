@@ -42,38 +42,26 @@ export const cleanActiveNote = () => ({
 
 export const eventStartUpdate = (event) => {
     return async (dispatch) => {
+        const token = localStorage.getItem('token');
+        
         try {
-
-            const resp = await fetchConToken(`events/${ event.id }`, event, 'PUT' );
-            const body = await resp.json();
-
-            if ( body.ok ) {
-                dispatch( eventUpdated( event ) );
-            } else {
-                Swal.fire('Error', body.msg, 'error');
-            }
-
-           /*  console.log(event)
-            const token =localStorage.getItem('token')
-            const { data } = await clienteAxiosToken.put(`/events/${event.id}`,event,{
+            const { data } = await clienteAxiosToken.put(`/events/${event.id}`, event,{
                 headers:{
                     'x-token':token
                 }
             })
-            if(data.ok){
-                
-                dispatch(eventUpdated(data.event))
-                console.log(data.event)              
-            }else{
-                Swal.fire('Error',data.msg,'error')
-            } */
+            if (data.ok) {
+                dispatch(eventUpdated(event))
+            } else {
+                Swal.fire('Error', data.msg, 'error')
+            }
         } catch (error) {
             console.log(error)
         }
     }
 }
 
- const eventUpdated = (event) => ({
+const eventUpdated = (event) => ({
     type: types.eventUpdated,
     payload: event
 });
@@ -84,33 +72,13 @@ export const eventDeleted = (id) => ({
 });
 
 export const eventStartLoading = () => {
-    
     return async (dispatch) => {
-
         try {
+            const resp = await fetchConToken('events');
+            const body = await resp.json();
 
-            /* await clienteAxiosToken.get('/events')
-                .then(({data})=> {
-                        const event =  dispatch(prepareEvents(data.events));
-                      dispatch(eventLoaded(event));
-                })
-                .catch(e=>{
-                    console.log(e)
-                }) */
-                  /*   const token =localStorage.getItem('token')
-                    const { data } = await clienteAxiosToken.get('events',{
-                        headers:{
-                            'x-token':token
-                        }
-                    });
-                    const events = prepareEvents(data.events);
-                    dispatch(eventLoaded(events)); */
-
-                 const resp = await fetchConToken( 'events' );
-                 const body = await resp.json();
-     
-                 const events = prepareEvents( body.events );
-                 dispatch( eventLoaded( events ) );
+            const events = prepareEvents(body.events);
+            dispatch(eventLoaded(events));
         } catch (error) {
             console.log(error.response)
         }
