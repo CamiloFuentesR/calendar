@@ -42,6 +42,7 @@ export const uiReducer = (state = initialState, action) => {
                 loading: action.payload
             }
         
+        
         default:
             return state;
     }

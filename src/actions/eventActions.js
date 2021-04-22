@@ -15,19 +15,13 @@ export const eventStartAddNew = (event) => {
                         _id: uid,
                         name
                     }
-                    console.log(event)
                     dispatch(eventAddNew(event))
-
                 })
                 .catch(({ response }) => console.log(response));
-
         } catch (error) {
             console.log(error);
             Swal.fire('Error', error, 'error');
         }
-
-
-
     }
 }
 
@@ -46,7 +40,40 @@ export const cleanActiveNote = () => ({
 
 });
 
-export const eventUpdated = (event) => ({
+export const eventStartUpdate = (event) => {
+    return async (dispatch) => {
+        try {
+
+            const resp = await fetchConToken(`events/${ event.id }`, event, 'PUT' );
+            const body = await resp.json();
+
+            if ( body.ok ) {
+                dispatch( eventUpdated( event ) );
+            } else {
+                Swal.fire('Error', body.msg, 'error');
+            }
+
+           /*  console.log(event)
+            const token =localStorage.getItem('token')
+            const { data } = await clienteAxiosToken.put(`/events/${event.id}`,event,{
+                headers:{
+                    'x-token':token
+                }
+            })
+            if(data.ok){
+                
+                dispatch(eventUpdated(data.event))
+                console.log(data.event)              
+            }else{
+                Swal.fire('Error',data.msg,'error')
+            } */
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+ const eventUpdated = (event) => ({
     type: types.eventUpdated,
     payload: event
 });

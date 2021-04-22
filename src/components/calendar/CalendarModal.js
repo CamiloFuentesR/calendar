@@ -10,7 +10,7 @@ import 'moment/locale/es';
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal, uiOpenSuccesM } from '../../actions/uiActions';
-import { cleanActiveNote, eventStartAddNew, eventDeleted, eventUpdated } from '../../actions/eventActions';
+import { cleanActiveNote, eventStartAddNew, eventDeleted, eventStartUpdate } from '../../actions/eventActions';
 
 moment.locale("es");
 
@@ -56,9 +56,15 @@ export const CalendarModal = () => {
 
     useEffect(() => {
         if (activeEvent) {
+            setDateStart(activeEvent.start);
+            setDateEnd(activeEvent.end)
             setFormValues(activeEvent)
             setDisabledButton(false)
         } else {
+            setFormValues(initEvent)
+            setDateStart(now.toDate());
+            setDateEnd(endDate.toDate())
+
             setDisabledButton(true)
 
         }
@@ -85,14 +91,14 @@ export const CalendarModal = () => {
         setDateStart(e);
         setFormValues({
             ...formValues,
-            start: e.toDate()
+            start: e
         });
     }
     const handleEndDateChange = (e) => {
         setDateEnd(e);
         setFormValues({
             ...formValues,
-            end: e.toDate()
+            end: e
         });
     }
 
@@ -136,7 +142,7 @@ export const CalendarModal = () => {
         }
         //toDo Realizar grabacion en bdd
         if (activeEvent) {
-            dispatch(eventUpdated(formValues))
+            dispatch(eventStartUpdate(formValues))
         } else {
             dispatch(eventStartAddNew(formValues));
         }

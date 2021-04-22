@@ -38,7 +38,7 @@ const localizer = momentLocalizer(moment);
 
 export const CalendarScreen = (e) => {
     const dispatch = useDispatch();
-
+    const {uid} = useSelector(state => state.root.auth)
     //leer eventos desde el store
     const {events} = useSelector(state => state.root.calendar)
 
@@ -68,17 +68,22 @@ export const CalendarScreen = (e) => {
     }
 
     const eventStyleGetter = (event,start,end,isSelected) => {
-        const style = {
-            backgroundColor:'#367CF7',
-            borderRadius: '5px',
-            opacity: 0.8,
-            display: 'block',
-            color: 'white'
-        }
+        /* console.log(uid)
+        console.log(event.user._id) */
+            if (event.user._id){
 
-        return {
-            style
-        }
+                const style = {
+                backgroundColor: (uid === event.user._id) ?  '#367CF7': '#DEA20E' ,
+                borderRadius: '5px',
+                opacity: 0.8,
+                display: 'block',
+                color: 'white'
+            }
+            return {
+                style
+            }
+            }  
+
     };
 
     return (
