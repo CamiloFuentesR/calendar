@@ -91,14 +91,14 @@ export const CalendarModal = () => {
         setDateStart(e);
         setFormValues({
             ...formValues,
-            start: e
+            start: e.toDate()
         });
     }
     const handleEndDateChange = (e) => {
         setDateEnd(e);
         setFormValues({
             ...formValues,
-            end: e
+            end: e.toDate()
         });
     }
 
