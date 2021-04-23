@@ -87,7 +87,7 @@ html, body{
     padding: 17px;
     position: fixed;
     right: 25px;
-    z-index: 99999;
+    z-index: 100;
 }
 .swal2-popup {
     font-size: 0.8rem;
