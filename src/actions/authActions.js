@@ -19,7 +19,7 @@ export const startLogin = (value) => {
                 setTimeout(() => {
                     dispatch(startLogout())
                     Swal.fire('Fin de la sesión',`'Su Sesión ha expirado`,'warning')
-                }, 3000);
+                }, 600000);
                 dispatch(endLoading());
             })
             .catch(({ response: { data: { msg } } }) => {
