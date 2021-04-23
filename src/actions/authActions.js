@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import clienteAxios, { clienteAxiosToken, token } from "../config/axios"
 import { types } from "../types/types"
+import { eventLogout } from "./eventActions";
 import { endLoading, startLoading } from "./uiActions";
 
 export const startLogin = (value) => {
@@ -15,6 +16,10 @@ export const startLogin = (value) => {
                     uid: data.uid,
                     name: data.name
                 }));
+                setTimeout(() => {
+                    dispatch(startLogout())
+                    Swal.fire('Fin de la sesión',`'Su Sesión ha expirado`,'warning')
+                }, 3000);
                 dispatch(endLoading());
             })
             .catch(({ response: { data: { msg } } }) => {
@@ -57,6 +62,10 @@ export const startChecking = () => {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
 
+                setTimeout(() => {
+                    dispatch(startLogout())
+                    Swal.fire('Fin de la sesión',`'Su Sesión ha expirado`,'warning')
+                }, 600000);
                 dispatch(login({
                     uid: data.uid,
                     name: data.name
@@ -73,6 +82,7 @@ export const startChecking = () => {
 export const startLogout = () => {
     return (dispatch) => {
         localStorage.clear();
+        dispatch(eventLogout())
         dispatch(logout())
     }
 }

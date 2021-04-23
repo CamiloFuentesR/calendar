@@ -26,5 +26,4 @@ export const types = {
     authStartTokenRenew: '[auth] Start token renew',
     authLogout: '[auth] Logout',
 
-
 } 

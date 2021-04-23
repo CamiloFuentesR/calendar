@@ -22,6 +22,7 @@ export const eventStartAddNew = (event) => {
                         name
                     }
                     dispatch(eventAddNew(event))
+                   
                 })
                 .catch(({ response }) => {
                     if (response.data.msg === 'Token no válido') {
