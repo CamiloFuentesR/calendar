@@ -1,3 +1,5 @@
+import { token } from "../config/axios";
+
 const baseUrl = process.env.REACT_APP_API_URL;
 
 
@@ -19,14 +21,14 @@ export const fetchSinToken = (endpoint,data,method= 'GET') => {
 }
 export const fetchConToken = ( endpoint, data, method = 'GET' ) => {
 
+    
     const url = `${ baseUrl }/${ endpoint }`;
-    const token = localStorage.getItem('token') || '';
 
     if ( method === 'GET' ) {
         return fetch( url, {
             method,
             headers: {
-                'x-token': token
+                'x-token': token()
             }
         });
     } else {
@@ -34,7 +36,7 @@ export const fetchConToken = ( endpoint, data, method = 'GET' ) => {
             method,
             headers: {
                 'Content-type': 'application/json',
-                'x-token': token
+                'x-token': token()
             },
             body: JSON.stringify( data )
         });

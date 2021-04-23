@@ -1,9 +1,8 @@
 import { types } from "../types/types";
 
-
 const initialState = {
     events: [],
-    activeEvent : null
+    activeEvent: null
 }
 
 export const calendarReducer = (state = initialState, action) => {
@@ -12,9 +11,10 @@ export const calendarReducer = (state = initialState, action) => {
         case types.eventSetActive:
             return {
                 ...state,
-                activeEvent: action.payload 
+                activeEvent: action.payload
             }
-        case types.eventAddNew:{
+
+        case types.eventAddNew: 
             return {
                 ...state,
                 events: [
@@ -22,38 +22,40 @@ export const calendarReducer = (state = initialState, action) => {
                     action.payload
                 ]
             }
-        }
-        case types.cleanActiveNote: {
-            return{
+        
+        case types.cleanActiveNote: 
+            return {
                 ...state,
-                activeEvent:null
+                activeEvent: null
             }
-        }
 
-        case types.eventUpdated:{
-            return{
+        case types.eventUpdated: 
+            return {
                 ...state,
                 events: state.events.map(
-                    e=> (e.id === action.payload.id) ? action.payload : e
+                    e => (e.id === action.payload.id) ? action.payload : e
                 )
             }
-        }
 
-        case types.eventDeleted: {
+        case types.eventDeleted: 
             return {
                 ...state,
                 events: state.events.filter(
-                    e=> e.id !== action.payload
+                    e => e.id !== state.activeEvent.id
                 ),
-                activeEvent:null
+                activeEvent: null
             }
-        }
 
         case types.eventLoaded:
             return {
                 ...state,
-                events: [ ...action.payload ]
+                events: [...action.payload]
             }
+        case types.eventLogout:
+                return {
+                    ...state,
+                    events: []
+                }
         default:
             return state;
     }

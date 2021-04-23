@@ -6,18 +6,11 @@ import { endLoading, startLoading } from "./uiActions";
 export const startLogin = (value) => {
     return async (dispatch) => {
         dispatch(startLoading())
-        // const isCurrentToken = !!(localStorage.getItem('token') || '');
-
-        // if (!isCurrentToken){
-        //     dispatch(checkingFinish()); 
-        //     return;
-        // }
         await clienteAxios.post('/auth', value)
             .then(({ data }) => {
 
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
-
                 dispatch(login({
                     uid: data.uid,
                     name: data.name
@@ -25,13 +18,8 @@ export const startLogin = (value) => {
                 dispatch(endLoading());
             })
             .catch(({ response: { data: { msg } } }) => {
-
                 Swal.fire('Error', msg, 'error');
             });
-
-
-
-
         //  const resp = await fetchSinToken('auth',value,'POST')
         //  const body = await resp.json();
         //  console.log(resp) 
@@ -58,7 +46,7 @@ export const startRegister = ({ rName: name, rEmail: email, rPassword1: password
 
 export const startChecking = () => {
     return async (dispatch) => {
-        const isCurrentToken = !!token || '';
+        const isCurrentToken = !!token() || '';
         if (!isCurrentToken) {
             dispatch(checkingFinish());
             return;

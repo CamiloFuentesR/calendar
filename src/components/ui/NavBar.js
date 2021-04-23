@@ -2,12 +2,13 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { startLogout} from '../../actions/authActions'
+import {eventLogout} from '../../actions/eventActions'
 export const NavBar = () => {
     const {name} = useSelector(state => state.root.auth)
     const dispatch = useDispatch();
      
     const handleLogout = () => {
-        
+        dispatch(eventLogout())
          dispatch(startLogout())
     }
 

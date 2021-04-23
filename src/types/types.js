@@ -16,6 +16,7 @@ export const types = {
     cleanActiveNote: '[event] Clean ActiveNote',
     eventDeleted: '[event] Event Deleted',
     eventLoaded: '[event] Events loaded',
+    eventLogout: '[event] Event Loout',
 
     authCheckingFinish: '[auth] finish login state',
     authStartLogin: '[auth] Start login',

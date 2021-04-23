@@ -10,7 +10,7 @@ import 'moment/locale/es';
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal, uiOpenSuccesM } from '../../actions/uiActions';
-import { cleanActiveNote, eventStartAddNew, eventDeleted, eventStartUpdate } from '../../actions/eventActions';
+import { cleanActiveNote, eventStartAddNew, eventStartUpdate, eventStartDelete } from '../../actions/eventActions';
 
 moment.locale("es-ES");
 
@@ -116,7 +116,7 @@ export const CalendarModal = () => {
             confirmButtonText: '¡Si, eliminar este evento!'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(eventDeleted(activeEvent.id));
+                dispatch(eventStartDelete(activeEvent.id));
                 setFormValues(initEvent);
                 dispatch(uiCloseModal());
 
@@ -230,7 +230,28 @@ export const CalendarModal = () => {
                 </div>
                 <div className="row justify-content-between ml-1 mr-1">
                     {
-                        validateUser &&
+                        (validateUser && activeEvent) &&
+                        <>
+                            <button
+                                type="submit"
+                                className="btn btn-outline-primary  col-5 p-2"
+                            >
+                                <i className="far fa-save mr-1"></i>
+                                <span> Guardar</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-outline-danger col-5"
+                                onClick={handleDeleteEvent}
+                                disabled={disabledButton}
+                            >
+                                <i className="far fa-trash-alt mr-1"></i>
+                                <span> Eliminar</span>
+                            </button>
+                        </>
+                    }
+                    {
+                        ( !activeEvent) &&
                         <>
                             <button
                                 type="submit"
@@ -253,7 +274,7 @@ export const CalendarModal = () => {
                 </div>
             </form>
             {
-                !validateUser &&
+                !validateUser && activeEvent &&
                 <div className="row justify-content-center">
                     <button
                         type="button"
