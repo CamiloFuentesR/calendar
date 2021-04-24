@@ -24,6 +24,8 @@ export const startLogin = (value) => {
             })
             .catch(({ response: { data: { msg } } }) => {
                 Swal.fire('Error', msg, 'error');
+                dispatch(endLoading());
+
             });
         //  const resp = await fetchSinToken('auth',value,'POST')
         //  const body = await resp.json();
