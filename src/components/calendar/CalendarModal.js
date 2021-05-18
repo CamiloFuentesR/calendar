@@ -72,7 +72,7 @@ export const CalendarModal = () => {
             setDateStart(now.toDate());
             setDateEnd(endDate.toDate())
         }
-    }, [activeEvent, uid,validateUser])
+    }, [activeEvent, uid])
     const handleInputChange = ({ target }) => {
 
         setFormValues({
@@ -155,136 +155,142 @@ export const CalendarModal = () => {
     }
 
     return (
-        <Modal
-            isOpen={modalOpen}
-            // onAfterOpen={sa}
-            onRequestClose={closeModal}
-            style={customStyles}
-            closeTimeoutMS={200}
-            className='modal '
-            overlayClassName='modal-fondo'
-        >
+        <>
+            {
+                modalOpen &&
 
-            {
-                (activeEvent && validateUser)
-                && <h1 className="text-center"> {activeEvent ? 'Editar Evento' : 'Nuevo Evento'} </h1>
-            }
-            {
-                (activeEvent && !validateUser) && <h1 className="text-center"> {`Evento de ${activeEvent.user.name}`}</h1>
-            }
-            <hr />
-            <form
-                className="container"
-                onSubmit={handleSubmitForm}
-            >
-                <div className="form-group">
-                    <label>Fecha y hora inicio</label>
-                    <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}>
-                        <DateTimePicker
-                            autoOk
-                            _locale={"es"}
-                            value={dateStart}
-                            onChange={handleStartDateChange}
-                            className="form-control in"
-                            format="y-MM-DD - ddd - h:mm:ss a"
-                        />
-                    </MuiPickersUtilsProvider>
-                </div>
-                <div className="form-group">
-                    <label>Fecha y hora fin</label>
-                    <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}>
-                        <DateTimePicker
-                            autoOk
-                            value={dateEnd}
-                            onChange={handleEndDateChange}
-                            className="form-control"
-                            minDate={dateStart}
-                            format="y-MM-DD - ddd - h:mm:ss a"
-                        />
-                    </MuiPickersUtilsProvider>
-                </div>
-                <hr />
-                <div className="form-group">
-                    <label>Titulo y notas</label>
-                    <input
-                        type="text"
-                        className={`form-control ${!validTitle && 'is-invalid '}`}
-                        placeholder="Título del evento"
-                        name="title"
-                        autoComplete="off"
-                        value={title}
-                        onChange={handleInputChange}
-                    />
-                    <small id="emailHelp" className="form-text text-muted">Una descripción corta</small>
-                </div>
-                <div className="form-group">
-                    <textarea
-                        type="text"
-                        className="form-control"
-                        placeholder="Notas"
-                        rows="3"
-                        name="notes"
-                        value={notes}
-                        onChange={handleInputChange}
-                    ></textarea>
-                    <small id="emailHelp" className="form-text text-muted">Información adicional</small>
-                </div>
-                <div className="row justify-content-between ml-1 mr-1">
+                <Modal
+                    isOpen={modalOpen}
+                    // onAfterOpen={sa}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    closeTimeoutMS={200}
+                    className='modal '
+                    overlayClassName='modal-fondo'
+                >
+
                     {
-                        (validateUser) && (activeEvent) &&
-                        <>
-                            <button
-                                type="submit"
-                                className="btn btn-outline-primary  col-5 p-2"
-                            >
-                                <i className="far fa-save mr-1"></i>
-                                <span> Guardar</span>
-                            </button>
-                            <button
-                                type="button"
-                                className="btn btn-outline-danger col-5"
-                                onClick={handleDeleteEvent}
-                                disabled={disabledButton}
-                            >
-                                <i className="far fa-trash-alt mr-1"></i>
-                                <span> Eliminar</span>
-                            </button>
-                        </>
+                        (activeEvent && validateUser)
+                        && <h1 className="text-center"> {activeEvent ? 'Editar Evento' : 'Nuevo Evento'} </h1>
                     }
                     {
-                        (!activeEvent) && (!validateUser) &&
-                        <>
-                            <button
-                                type="submit"
-                                className="btn btn-outline-primary  col-5 p-2"
-                            >
-                                <i className="far fa-save mr-1"></i>
-                                <span> Guardar</span>
-                            </button>
+                        (activeEvent && !validateUser) && <h1 className="text-center"> {`Evento de ${activeEvent.user.name}`}</h1>
+                    }
+                    <hr />
+                    <form
+                        className="container"
+                        onSubmit={handleSubmitForm}
+                    >
+                        <div className="form-group">
+                            <label>Fecha y hora inicio</label>
+                            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}>
+                                <DateTimePicker
+                                    autoOk
+                                    _locale={"es"}
+                                    value={dateStart}
+                                    onChange={handleStartDateChange}
+                                    className="form-control in"
+                                    format="y-MM-DD - ddd - h:mm:ss a"
+                                />
+                            </MuiPickersUtilsProvider>
+                        </div>
+                        <div className="form-group">
+                            <label>Fecha y hora fin</label>
+                            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}>
+                                <DateTimePicker
+                                    autoOk
+                                    value={dateEnd}
+                                    onChange={handleEndDateChange}
+                                    className="form-control"
+                                    minDate={dateStart}
+                                    format="y-MM-DD - ddd - h:mm:ss a"
+                                />
+                            </MuiPickersUtilsProvider>
+                        </div>
+                        <hr />
+                        <div className="form-group">
+                            <label>Titulo y notas</label>
+                            <input
+                                type="text"
+                                className={`form-control ${!validTitle && 'is-invalid '}`}
+                                placeholder="Título del evento"
+                                name="title"
+                                autoComplete="off"
+                                value={title}
+                                onChange={handleInputChange}
+                            />
+                            <small id="emailHelp" className="form-text text-muted">Una descripción corta</small>
+                        </div>
+                        <div className="form-group">
+                            <textarea
+                                type="text"
+                                className="form-control"
+                                placeholder="Notas"
+                                rows="3"
+                                name="notes"
+                                value={notes}
+                                onChange={handleInputChange}
+                            ></textarea>
+                            <small id="emailHelp" className="form-text text-muted">Información adicional</small>
+                        </div>
+                        <div className="row justify-content-between ml-1 mr-1">
+                            {
+                                (validateUser) && (activeEvent) &&
+                                <>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-outline-primary  col-5 p-2"
+                                    >
+                                        <i className="far fa-save mr-1"></i>
+                                        <span> Guardar</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-danger col-5"
+                                        onClick={handleDeleteEvent}
+                                        disabled={disabledButton}
+                                    >
+                                        <i className="far fa-trash-alt mr-1"></i>
+                                        <span> Eliminar</span>
+                                    </button>
+                                </>
+                            }
+                            {
+                                (!activeEvent) && (!validateUser) &&
+                                <>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-outline-primary  col-5 p-2"
+                                    >
+                                        <i className="far fa-save mr-1"></i>
+                                        <span> Guardar</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-danger col-5"
+                                        onClick={closeModal}
+                                    >
+                                        <i class="fas fa-times"></i>
+                                        <span> Cancelar</span>
+                                    </button>
+                                </>
+                            }
+                        </div>
+                    </form>
+                    {
+                        !validateUser && activeEvent &&
+                        <div className="row justify-content-center">
                             <button
                                 type="button"
-                                className="btn btn-outline-danger col-5"
+                                className="btn btn-outline-danger col-10  "
                                 onClick={closeModal}
                             >
-                                <i class="fas fa-times"></i>
-                                <span> Cancelar</span>
+                                <span>X Cerrar Evento</span>
                             </button>
-                        </>
+                        </div>
                     }
-                </div>
-            </form>
-            {
-                !validateUser && activeEvent &&
-                <div className="row justify-content-center">
-                    <button
-                        type="button"
-                        className="btn btn-outline-danger col-10  "
-                        onClick={closeModal}
-                    >
-                        <span>X Cerrar Evento</span>
-                    </button>
-                </div>
+                </Modal>
             }
-        </Modal>
+        </>
     )
 }

@@ -56,7 +56,6 @@ html, body{
     max-width: 500px;
     outline: none;
     padding: 10px;
-    
 }
 
 /* datepicker */
@@ -241,14 +240,3 @@ html, body{
               transform: scale(1);
     }
   }
-
-
-  .modal-close{
-      width: 25em;
-      margin-left: 2.6em;
-      border-radius: 7px;
-      opacity: .7;
-      background-color: rgb(255, 2, 2);
-      color: white;
-  }
-  
