@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 export const PublicRouter = ({
     isAuthenticated,
+    isLogged,
     component: Component,
     ...rest
 }) => {
@@ -14,7 +15,7 @@ export const PublicRouter = ({
         <Route {...rest}
             component={(props) => (
 
-                (!isAuthenticated)
+                (!isAuthenticated && !isLogged)
                     ? (<Component {...props} />)
                     : (<Redirect to="/" />)
             )}

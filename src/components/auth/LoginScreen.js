@@ -22,7 +22,6 @@ export const LoginScreen = () => {
     });
 
     const { rName, rEmail, rPassword1, rPassword2 } = formRegisterValues;
-
     const { email, password } = formLoginValues;
 
     const handleLoginSubmit = (e) => {
@@ -30,14 +29,13 @@ export const LoginScreen = () => {
         dispatch(startLogin(formLoginValues));
 
     }
+
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
         if (rPassword1 !== rPassword2) {
             return Swal.fire('Error', 'Las contraaseñas deben ser iguales', 'error')
         }
-
         dispatch(startRegister(formRegisterValues));
-
     }
 
     return (
@@ -63,6 +61,7 @@ export const LoginScreen = () => {
                             <div className="form-group">
                                 <input
                                     type="password"
+                                    autoComplete="false"
                                     className="form-control"
                                     placeholder="Contraseña"
                                     name="password"

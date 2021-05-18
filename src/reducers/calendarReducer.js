@@ -14,7 +14,7 @@ export const calendarReducer = (state = initialState, action) => {
                 activeEvent: action.payload
             }
 
-        case types.eventAddNew: 
+        case types.eventAddNew:
             return {
                 ...state,
                 events: [
@@ -22,14 +22,14 @@ export const calendarReducer = (state = initialState, action) => {
                     action.payload
                 ]
             }
-        
-        case types.cleanActiveNote: 
+
+        case types.cleanActiveNote:
             return {
                 ...state,
                 activeEvent: null
             }
 
-        case types.eventUpdated: 
+        case types.eventUpdated:
             return {
                 ...state,
                 events: state.events.map(
@@ -37,7 +37,7 @@ export const calendarReducer = (state = initialState, action) => {
                 )
             }
 
-        case types.eventDeleted: 
+        case types.eventDeleted:
             return {
                 ...state,
                 events: state.events.filter(
@@ -52,10 +52,10 @@ export const calendarReducer = (state = initialState, action) => {
                 events: [...action.payload]
             }
         case types.eventLogout:
-                return {
-                    ...state,
-                    events: []
-                }
+            return {
+                ...state,
+                events: []
+            }
         default:
             return state;
     }

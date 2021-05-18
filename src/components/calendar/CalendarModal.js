@@ -66,12 +66,13 @@ export const CalendarModal = () => {
                 setvalidateUser(true)
             }
         } else {
+            setvalidateUser(false)
+            setDisabledButton(true)
             setFormValues(initEvent)
             setDateStart(now.toDate());
             setDateEnd(endDate.toDate())
-            setDisabledButton(true)
         }
-    }, [activeEvent, uid])
+    }, [activeEvent, uid,validateUser])
     const handleInputChange = ({ target }) => {
 
         setFormValues({
@@ -83,9 +84,9 @@ export const CalendarModal = () => {
     const closeModal = () => {
         if (modalOpen) { //para que no se repita dos veces el dispatch
             dispatch(uiCloseModal());
-            dispatch(cleanActiveNote());
             setFormValues(initEvent);
             setValidTitle(true)
+            dispatch(cleanActiveNote());
         }
     }
 
@@ -116,9 +117,9 @@ export const CalendarModal = () => {
             confirmButtonText: '¡Si, eliminar este evento!'
         }).then((result) => {
             if (result.isConfirmed) {
+                dispatch(uiCloseModal());
                 dispatch(eventStartDelete(activeEvent.id));
                 setFormValues(initEvent);
-                dispatch(uiCloseModal());
 
                 Swal.fire(
                     'Eliminado!',
@@ -148,9 +149,9 @@ export const CalendarModal = () => {
         } else {
             dispatch(eventStartAddNew(formValues));
         }
+        closeModal();
         dispatch(uiOpenSuccesM());
         setValidTitle(true);
-        closeModal();
     }
 
     return (
@@ -230,7 +231,7 @@ export const CalendarModal = () => {
                 </div>
                 <div className="row justify-content-between ml-1 mr-1">
                     {
-                        (validateUser && activeEvent) &&
+                        (validateUser) && (activeEvent) &&
                         <>
                             <button
                                 type="submit"
@@ -251,7 +252,7 @@ export const CalendarModal = () => {
                         </>
                     }
                     {
-                        ( !activeEvent) &&
+                        (!activeEvent) && (!validateUser) &&
                         <>
                             <button
                                 type="submit"
@@ -263,11 +264,10 @@ export const CalendarModal = () => {
                             <button
                                 type="button"
                                 className="btn btn-outline-danger col-5"
-                                onClick={handleDeleteEvent}
-                                disabled={disabledButton}
+                                onClick={closeModal}
                             >
-                                <i className="far fa-trash-alt mr-1"></i>
-                                <span> Eliminar</span>
+                                <i class="fas fa-times"></i>
+                                <span> Cancelar</span>
                             </button>
                         </>
                     }
